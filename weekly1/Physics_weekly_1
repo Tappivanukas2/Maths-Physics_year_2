@@ -1,0 +1,40 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the .xls file
+data = pd.read_excel("Acceleration without g 2025-01-19 14-04-39.xls")  # Replace with your file path
+
+# Extract columns
+time = data['Time (s)']
+Linear_Acceleration_x = data['Linear Acceleration x (m/s^2)']
+Linear_Acceleration_y = data['Linear Acceleration y (m/s^2)']
+Linear_Acceleration_z = data['Linear Acceleration z (m/s^2)']
+
+fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+
+# Plot the data
+axs[0].plot(time, Linear_Acceleration_x, linewidth=0.5, label='Linear Acceleration x', color='blue')
+axs[0].set_title("Linear Acceleration x")
+axs[0].set_xlabel("t (s)")
+axs[0].set_ylabel("a (m/s^2)")
+axs[0].grid()
+plt.legend()
+
+axs[1].plot(time, Linear_Acceleration_y, linewidth=0.5, label='Linear Acceleration y', color='red')
+axs[1].set_title("Linear Acceleration y")
+axs[1].set_xlabel("t (s)")
+axs[1].set_ylabel("a (m/s^2)")
+axs[1].grid()
+plt.legend()
+
+axs[2].plot(time, Linear_Acceleration_z, linewidth=0.5, label='Linear Acceleration z', color='green'),
+axs[2].set_title("Linear Acceleration z")
+axs[2].set_xlabel("t (s)")
+axs[2].set_ylabel("a (m/s^2)")
+axs[2].grid()
+plt.legend()
+
+plt.tight_layout()
+
+# Show the plot
+plt.show()

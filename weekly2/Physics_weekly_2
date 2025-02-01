@@ -1,0 +1,45 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.signal import butter, filtfilt
+
+data = pd.read_excel("Acceleration without g 2025-01-26 09-06-22.xls")
+
+# Extract columns
+time = data['Time (s)']
+Linear_Acceleration_x = data['Linear Acceleration x (m/s^2)']
+
+# low-pass filter to the data
+def butter_lowpass_filter(data, lowcut, highcut, fs, order=5):
+    nyquist = 0.5 * fs
+    low = lowcut / nyquist
+    high = highcut / nyquist
+    b, a = butter(order, [low, high], btype='band', analog=False)
+    y = filtfilt(b, a, data)
+    return y
+
+lowcut = 1  # Low cutoff frequency in Hz
+highcut = 5  # High cutoff frequency in Hz
+fs = 100  # Sampling frequency in Hz
+
+Linear_Acceleration_x_filtered = butter_lowpass_filter(Linear_Acceleration_x, lowcut, highcut, fs)
+
+fig, axs = plt.subplots(2, 1, figsize=(10, 10))
+
+# Plot the data
+axs[0].plot(time, Linear_Acceleration_x, linewidth=0.5, label='Linear Acceleration x unfiltered', color='blue')
+axs[0].set_title("Linear Acceleration x unfiltered")
+axs[0].set_xlabel("t (s)")
+axs[0].set_ylabel("a (m/s^2)")
+axs[0].grid()
+plt.legend()
+
+axs[1].plot(time, Linear_Acceleration_x_filtered, linewidth=0.5, label='Linear Acceleration x filtered', color='red')
+axs[1].set_title("Linear Acceleration x filtered")
+axs[1].set_xlabel("t (s)")
+axs[1].set_ylabel("a (m/s^2)")
+axs[1].grid()
+plt.legend()
+
+plt.tight_layout()
+
+plt.show()
