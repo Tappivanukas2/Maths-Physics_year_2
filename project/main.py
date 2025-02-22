@@ -8,8 +8,6 @@ import math
 from scipy.signal import butter, filtfilt, welch, find_peaks
 import scipy.signal
 from  scipy.fft import fft, fftfreq
-import io
-from PIL import Image
 
 
 acceleration_data = pd.read_csv("Linear Accelerometer.csv")
